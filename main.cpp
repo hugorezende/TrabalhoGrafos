@@ -4,13 +4,14 @@
 #include <string>
 #include <vector>
 #include <ctime>
+#include <stack>
 
 using namespace std;
 
 
 
-/* DefiniÁ„o da classe Aresta
- * MÈtodos
+/* Defini√ß√£o da classe Aresta
+ * M√©todos
  *      Aresta(int peso, int val, Aresta * prox) -- CONSTRUTOR
  *      getVal()
  *      -- retorna inteiro
@@ -18,7 +19,7 @@ using namespace std;
  *
  *      getProx()
  *      -- retorna * Aresta
- *      -- pega o prÛximo na lista de adjacencia
+ *      -- pega o pr√≥ximo na lista de adjacencia
  *
  *
  * */
@@ -47,7 +48,7 @@ public:
 };
 
 /*
- * M…TODOS
+ * M√âTODOS
 */
 
 Aresta::Aresta(){
@@ -91,15 +92,15 @@ void Aresta::printLista(Aresta * a){
 
 
 //=======================
-/*DEFINI«√O DA CLASSE N”
+/*DEFINI√á√ÉO DA CLASSE N√ì
 //=======================
-    MÈtodos:
+    M√©todos:
  * setAresta(Aresta * a);
  *
  *
  * printNo();
  * -- Sem retono
- * -- Printa arestas adjacentes ao nÛ
+ * -- Printa arestas adjacentes ao n√≥
  */
 class No
 {
@@ -111,7 +112,7 @@ class No
 
 public:
 
-        No(); // construtor default definido pelo usu·rio
+        No(); // construtor default definido pelo usu√°rio
         No(int a, int grau, No* prox, Aresta * aresta);
         int getVal();
 
@@ -130,7 +131,7 @@ public:
 
 
 //
-// ======== M…TODOS N” ===========
+// ======== M√âTODOS N√ì ===========
 //
 
 No* No::getProx(){
@@ -161,12 +162,12 @@ Aresta * No::getUltimo(){
 void No::setProx(No * no){
     this->prox = no;
 }
-//Metodo de inserÁ„o de aresta
+//Metodo de inser√ß√£o de aresta
 void No::setAresta(Aresta * a){
     this->aresta = a;
 }
 
-//Metodo de inserÁ„o de ponteiro para ultima noAresta
+//Metodo de inser√ß√£o de ponteiro para ultima noAresta
 void No::setUltimo(Aresta * a){
     this->ultimo = a;
 }
@@ -199,7 +200,7 @@ No::No(int a, int grau, No * prox, Aresta * aresta){
 
 
 //
-// ======== FIM M…TODOS N” ===========
+// ======== FIM M√âTODOS N√ì ===========
 //
 
 
@@ -207,7 +208,7 @@ No::No(int a, int grau, No * prox, Aresta * aresta){
 
 
 //================================
-//===== COME«O CLASSE GRAFO  =====
+//===== COME√áO CLASSE GRAFO  =====
 //================================
 
 class Grafo{
@@ -219,7 +220,7 @@ class Grafo{
      No * ultimo;
 
 public:
-    //DECLARA«√O DOS M…TODOS
+    //DECLARA√á√ÉO DOS M√âTODOS
     Grafo();
     Grafo(int nNos, int nArestas, bool flagDir, int grauGrafo, No * lista,No * ultimo);
 
@@ -251,7 +252,7 @@ public:
 
 };
 
-//C”DIGO DOS M…TODOS
+//C√ìDIGO DOS M√âTODOS
 Grafo::Grafo(){
 
 }
@@ -267,7 +268,7 @@ Grafo::Grafo(int nNos, int nArestas, bool flagDir, int grauGrafo, No * lista, No
 
 void Grafo::addNo(No * no){
 
-    //VERIFICANDO SE O N” JA EXISTE NO GRAFO;
+    //VERIFICANDO SE O N√ì JA EXISTE NO GRAFO;
     //if(this->getNoGrafo(no->getVal()) !=NULL){
 
         if(this->ultimo==NULL){
@@ -284,10 +285,10 @@ void Grafo::addNo(No * no){
 
 void Grafo::removeNo(No * lista, int nVal){
 
-    //VERIFICA SE A LISTA … VAZIA
+    //VERIFICA SE A LISTA √â VAZIA
     if(lista!=NULL){
 
-    //VERIFICA SE O N” … O PRIMEIRO
+    //VERIFICA SE O N√ì √â O PRIMEIRO
     if(lista->getVal()==nVal){
             this->lista = lista->getProx();
         }else{
@@ -297,14 +298,14 @@ void Grafo::removeNo(No * lista, int nVal){
                 //achou a aresta a ser removida
                 if(lista->getProx()->getVal()==nVal){
 
-                    //verifica se È a ultima aresta
+                    //verifica se √© a ultima aresta
                     if(lista->getProx()->getProx()!=NULL){
                             lista->setProx(lista->getProx()->getProx());
                         }else{
                          lista->setProx(NULL);
                     }
 
-                //SE N√O … IGUAL VAI PARA O PROXIMO DA LISTA
+                //SE N√ÉO √â IGUAL VAI PARA O PROXIMO DA LISTA
                 }else{
                     this->removeNo(lista->getProx(),nVal);
                 }
@@ -312,7 +313,7 @@ void Grafo::removeNo(No * lista, int nVal){
             }
         }
     }
-    //REMOVENDO ARESTAS QUE LINCAVAM NO N”
+    //REMOVENDO ARESTAS QUE LINCAVAM NO N√ì
 
 
 }
@@ -346,7 +347,7 @@ No * Grafo::getLista(){
     return this->lista;
 }
 
-//AUXILIAR Para printat noÛs
+//AUXILIAR Para printat no√≥s
 void printNo_(No * n){
 
 
@@ -368,7 +369,7 @@ void Grafo::printGrafo(){
 
 
 
-//RETORNA O N” A PARTIR DE BUSCA PELO VALOR DO N”
+//RETORNA O N√ì A PARTIR DE BUSCA PELO VALOR DO N√ì
 No * getNo(No * n, int nVal){
 
     if(n->getVal()==nVal){
@@ -380,7 +381,7 @@ No * getNo(No * n, int nVal){
     }
 }
 
-//RETORNA O N” A PARTIR DE BUSCA PELO VALOR DA ARESTA
+//RETORNA O N√ì A PARTIR DE BUSCA PELO VALOR DA ARESTA
 Aresta * getAresta(Aresta * n, int nVal){
 
     if(n->getVal()==nVal){
@@ -406,7 +407,7 @@ void Grafo::addAresta(Aresta * a, int n){
 
     No * findNo = getNo(this->lista,n);
 
-    //VERIFICA SE N” J¡ POSSUI LISTA ENCADEADA DE ARESTAS
+    //VERIFICA SE N√ì J√Å POSSUI LISTA ENCADEADA DE ARESTAS
     //SE NAO POSSI LISTA ENCADEADA, COLOCA ARESTA NO NO, E APONTA ULTIMO PARA A MESMA ARESTA
     if(findNo->getAresta()==NULL){
            findNo->setAresta(a);
@@ -450,7 +451,7 @@ void Grafo::removeAresta(No * no, Aresta * a, int n){
 
     }
 
-    //VERIFICA SE N” J¡ POSSUI LISTA ENCADEADA DE ARESTAS
+    //VERIFICA SE N√ì J√Å POSSUI LISTA ENCADEADA DE ARESTAS
     //SE NAO POSSI LISTA ENCADEADA, COLOCA ARESTA NO NO, E APONTA ULTIMO PARA A MESMA ARESTA
 
     /*
@@ -487,7 +488,7 @@ void verificaGraus(No * no, int grau){
         printf("Grafo nao eh K-Regular \n");
         }
     }else{
-        //chegou ao final da lista sem entrar no N√O.
+        //chegou ao final da lista sem entrar no N√ÉO.
         printf("Grafo eh K-regular \n");
     }
 }
@@ -500,7 +501,7 @@ void Grafo::verificaKRegular(){
 }
 
 
-//DECLARANDO AS FUN«’ES
+//DECLARANDO AS FUN√á√ïES
 void buscaNoP(No * no, int busca, No * lista, bool *visitados);
 void verificaProxAresta(Aresta * aresta, int busca, No * lista, bool *visitados);
 
@@ -513,42 +514,51 @@ void verificaProxAresta(Aresta * aresta, int busca, No * lista, bool *visitados)
     }else{
         printf("%d->",aresta->getVal());
         No * findNo = getNo(lista,aresta->getVal());
+
+        //se a proxima aresta no ramo nao √© vazia
+        visitados[aresta->getVal()]=true;
         buscaNoP(findNo, busca, lista, visitados);
+            //alguma coisa
+
     }
 }
 
 void buscaNoP(No * no, int busca, No * lista, bool *visitados){
 
-    visitados[no->getVal()] = true;
+    if(visitados[no->getVal()] != true){
 
-    if(no->getVal()!=busca){
-        if(no->getAresta()!=NULL){
+        visitados[no->getVal()] = true;
+        if(no->getVal()!=busca){
+            if(no->getAresta()!=NULL){
 
-            printf("%d->",no->getAresta()->getVal());
-            No * findNo = getNo(lista,no->getAresta()->getVal());
+                printf("%d->",no->getAresta()->getVal());
+                No * findNo = getNo(lista,no->getAresta()->getVal());
 
-            //VERIFICA SE N” AINDA NAO FOI VISITADO
-            if(visitados[no->getAresta()->getVal()]==false){
-                buscaNoP(findNo,busca,lista,visitados);
+                //VERIFICA SE N√ì AINDA NAO FOI VISITADO
+                if(visitados[no->getAresta()->getVal()]==false){
+                    buscaNoP(findNo,busca,lista,visitados);
+                }else{
+                    verificaProxAresta(no->getAresta()->getProx(),busca,lista, visitados);
+                }
+
             }else{
-                verificaProxAresta(no->getAresta()->getProx(),busca,lista, visitados);
+                printf("Nao tem mais\n");
             }
-
         }else{
-            printf("Nao tem mais\n");
+                printf("Encontrou %d \n",no->getVal());
         }
     }else{
-            printf("Encontrou %d \n",no->getVal());
+        //SE NO J√Å FOI VISITADO
     }
 }
 
 void Grafo::buscaProfundidade(){
-
+    stack<int> pilha;
     bool visitados[10] = {false};
     int busca = 7;
 
     //visitados[1] = 22;
-
+    pilha.push(1);
     No * findNo = getNo(this->lista,1);
 
     buscaNoP(findNo,busca,this->lista, visitados);
@@ -568,9 +578,9 @@ void Grafo::buscaProfundidade(){
 
 
 
-//FUN«√O CRIA GRAFO
+//FUN√á√ÉO CRIA GRAFO
 //PARAMETROS
-//int nNos = Numero de nÛs do Grafo
+//int nNos = Numero de n√≥s do Grafo
 //array
 
 
@@ -594,7 +604,7 @@ void Grafo::buscaProfundidade(){
         ++number_of_lines;
 
 	}
-	//PEGANDO NA PRIMEIRA LINHA DO ARQUIVO O NUMERO DE N”S
+	//PEGANDO NA PRIMEIRA LINHA DO ARQUIVO O NUMERO DE N√ìS
     int nNos;
     file.clear();
     file.seekg(0, ios::beg);
@@ -605,7 +615,7 @@ void Grafo::buscaProfundidade(){
     Grafo gr = Grafo(nNos,NULL,true,0,NULL,NULL);
 
 
-    //Criando lista encadeada dos nÛs
+    //Criando lista encadeada dos n√≥s
     for (int i = 1; i<nNos+1; ++i){
 
         No * addNo = new No(i,0,NULL,NULL);
@@ -691,7 +701,7 @@ void Grafo::buscaProfundidade(){
             int _aresta;
             cin >> _aresta;
 
-            // === verifica se existe o nÛ
+            // === verifica se existe o n√≥
             if(gr.getNoGrafo(_no)!=NULL){
                 gr.removeAresta(gr.getNoGrafo(_no),gr.getNoGrafo(_no)->getAresta(),_aresta);
             //REMOVENDO A VOLTA
