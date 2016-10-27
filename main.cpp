@@ -85,7 +85,6 @@ void Aresta::printLista(Aresta * a){
 
 /*
 ======= END CLASSE ARESTA ======
-
 */
 
 
@@ -247,7 +246,7 @@ public:
     void removeTodaAresta(No * no, Aresta * a, int n);
     void verificaKRegular();
 
-    void buscaProfundidade();
+    void buscaProfundidade(int v);
 
 
 };
@@ -460,13 +459,10 @@ void Grafo::removeAresta(No * no, Aresta * a, int n){
         }else{
         if(a->getProx()!=NULL){
                 if(a->getProx()->getVal()==n){
-
                             a->setProx(a->getProx()->getProx());
-
                     }else{
                         this->removeAresta(no,a->getProx(),n);
                 }
-
             }
         }
          * */
@@ -552,20 +548,56 @@ void buscaNoP(No * no, int busca, No * lista, bool *visitados){
     }
 }
 
-void Grafo::buscaProfundidade(){
+void Grafo::buscaProfundidade(int v){
     stack<int> pilha;
-    bool visitados[10] = {false};
+    bool visitados[50000] = {false};
     int busca = 7;
 
+
+
     //visitados[1] = 22;
-    pilha.push(1);
-    No * findNo = getNo(this->lista,1);
+    pilha.push(v);
+    No * findNo;
+    Aresta * aresta;
 
-    buscaNoP(findNo,busca,this->lista, visitados);
+    findNo = getNo(this->lista,v);
+    aresta = findNo->getAresta();
+    visitados[v]=true;
+    printf("visitado: %d \n",v);
 
-    for(int i=0;i<10;i++){
-        printf("visitado: %d - %d \n",i,visitados[i]);
+    while(true){
+
+
+    //verifica se aresta ja foi visitada
+        if(visitados[aresta->getVal()]==false){
+            //marca aresta como visitada
+            visitados[aresta->getVal()]=true;
+            printf("visitado: %d \n",aresta->getVal());
+
+            v = aresta->getVal();
+            pilha.push(v);
+            aresta = getNo(this->lista,v)->getAresta();
+
+
+        }else{
+            //se proximo da aresta ja foi visitado
+            //verifica se existe aresta pra frente
+            if(aresta->getProx()!=NULL){
+                aresta = aresta->getProx();
+            }else{
+                //se nao existe para while
+
+                pilha.pop();
+                if(!pilha.empty()){
+                    aresta =  getNo(this->lista,pilha.top())->getAresta();
+                }else{
+                    break;
+                }
+            }
+
+        }
     }
+
 
 }
 
@@ -595,7 +627,7 @@ void Grafo::buscaProfundidade(){
     * */
 
 
-    std::ifstream file("FileArvore.txt");
+    std::ifstream file("File.txt");
     int number_of_lines = 0;
     string line;
 
@@ -740,7 +772,7 @@ void Grafo::buscaProfundidade(){
         if(cmdg==8){
 
             //gr.removeNo(gr.getLista(),_no);
-            gr.buscaProfundidade();
+            gr.buscaProfundidade(1);
 
         }
 
