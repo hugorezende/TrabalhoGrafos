@@ -5,6 +5,7 @@
 #include <vector>
 #include <ctime>
 #include <stack>
+#include <queue>
 
 using namespace std;
 
@@ -247,6 +248,7 @@ public:
     void verificaKRegular();
 
     void buscaProfundidade(int v);
+    void buscaLargura(int v);
 
 
 };
@@ -548,6 +550,10 @@ void buscaNoP(No * no, int busca, No * lista, bool *visitados){
     }
 }
 
+
+
+
+
 void Grafo::buscaProfundidade(int v){
     stack<int> pilha;
     bool visitados[50000] = {false};
@@ -602,6 +608,64 @@ void Grafo::buscaProfundidade(int v){
 }
 
 
+void Grafo::buscaLargura(int v){
+    queue<int> fila;
+    bool visitados[50000] = {false};
+
+
+
+    fila.push(v);
+    No * findNo;
+    Aresta * aresta;
+
+    findNo = getNo(this->lista,v);
+    aresta = findNo->getAresta();
+    visitados[v]=true;
+    printf("visitado: %d \n",v);
+
+    while(true){
+
+
+    //verifica se aresta ja foi visitada
+        if(visitados[aresta->getVal()]==false){
+            //marca aresta como visitada
+            visitados[aresta->getVal()]=true;
+            printf("visitado: %d \n",aresta->getVal());
+
+            v = aresta->getVal();
+            fila.push(v);
+            if(aresta->getProx()!=NULL){
+                aresta = aresta->getProx();
+                }else{
+
+                fila.pop();
+                if(!fila.empty()){
+                    aresta =  getNo(this->lista,fila.front())->getAresta();
+                }else{
+                    break;
+                }
+                }
+
+        }else{
+            //se proximo da aresta ja foi visitado
+            //verifica se existe aresta pra frente
+            if(aresta->getProx()!=NULL){
+                aresta = aresta->getProx();
+            }else{
+                //se nao existe para while
+
+                fila.pop();
+                if(!fila.empty()){
+                    aresta =  getNo(this->lista,fila.front())->getAresta();
+                }else{
+                    break;
+                }
+            }
+
+        }
+    }
+}
+
 
 //================================
 //======= FIM CLASSE GRAFO  ======
@@ -627,7 +691,7 @@ void Grafo::buscaProfundidade(int v){
     * */
 
 
-    std::ifstream file("File.txt");
+    std::ifstream file("FilePq.txt");
     int number_of_lines = 0;
     string line;
 
@@ -699,6 +763,7 @@ void Grafo::buscaProfundidade(int v){
     printf("5 - Remove No \n");
     printf("7 - Verifica K-regular \n");
     printf("8 - Busca Profundidade \n");
+    printf("9 - Busca Largura \n");
     while(1){
     printf("Comando: ");
     int cmdg;
@@ -773,6 +838,13 @@ void Grafo::buscaProfundidade(int v){
 
             //gr.removeNo(gr.getLista(),_no);
             gr.buscaProfundidade(1);
+
+        }
+
+        if(cmdg==9){
+
+            //gr.removeNo(gr.getLista(),_no);
+            gr.buscaLargura(1);
 
         }
 
